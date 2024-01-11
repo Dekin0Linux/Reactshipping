@@ -1,24 +1,18 @@
 import React from 'react'
+import Home from './Pages/Home'
+import { BrowserRouter as Router ,Routes,Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import Services from './components/Services'
-import Featured from './components/Featured'
-import Testimonials from './components/Testimonials'
-import Partners from './components/Partners'
-import Footer from './components/Footer'
+import Tracking from './Pages/Tracking'
 
 function App() {
   return (
-    <div>
+    <Router>
       <Navbar/>
-      <Hero/>
-      <Services/>
-      <Featured/>
-      <Testimonials/>
-      <Partners/>
-      <Footer/>
-      
-    </div>
+      <Routes>
+        <Route path='/' element={<Home/>}/>
+        <Route path='/tracking' element={<Tracking/>} />
+      </Routes>
+    </Router>
   )
 }
 

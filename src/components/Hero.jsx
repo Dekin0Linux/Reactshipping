@@ -1,5 +1,6 @@
 import React from 'react'
 import {MdDone} from 'react-icons/md'
+import { Link } from 'react-router-dom'
 
 function Hero() {
   return (
@@ -15,7 +16,10 @@ function Hero() {
                 </div>
 
                 <div className='inline-flex gap-6'>
-                    <button className='px-6 py-3 bg-blue-900 text-white font-semibold rounded'>Shipment Tracking</button>
+                    <Link to={'/tracking'}>
+                        <button className='px-6 py-3 bg-blue-900 text-white font-semibold rounded'>Shipment Tracking</button>
+                    </Link>
+                    
                     <button className='px-6 py-3 border-blue-900 border-2 text-black font-semibold rounded'>Shipment Rates</button>
                 </div>
             </div>

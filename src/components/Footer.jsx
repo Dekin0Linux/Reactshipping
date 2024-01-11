@@ -2,7 +2,7 @@ import React from 'react'
 
 function Footer() {
   return (
-    <div className='container md:mx-auto'>
+    <div className='container md:mx-auto '>
         <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2 gap-10 my-20 mx-5'>
           <div>
             <img src="https://cdn-icons-png.flaticon.com/512/7245/7245083.png" alt="logo" className='object-cover w-32'/>
