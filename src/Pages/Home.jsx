@@ -6,6 +6,7 @@ import Featured from '../components/Featured'
 import Testimonials from '../components/Testimonials'
 import Partners from '../components/Partners'
 import Footer from '../components/Footer'
+import Map from '../components/Map'
 
 function Home() {
   return (
@@ -14,6 +15,7 @@ function Home() {
         <Services/>
         <Featured/>
         <Testimonials/>
+        <Map/>
         <Partners/>
         <Footer/>
     </div>

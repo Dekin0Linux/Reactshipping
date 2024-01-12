@@ -6,7 +6,7 @@ import {
   TimelineIcon,
   TimelineHeader,
 } from "@material-tailwind/react";
-import { HomeIcon, CogIcon, UserIcon } from "@heroicons/react/24/outline";
+import { HomeIcon, CogIcon, UserIcon,ClipboardDocumentListIcon,TruckIcon,CubeIcon } from "@heroicons/react/24/outline";
 import {
   BellIcon,
   ArchiveBoxIcon,
@@ -20,7 +20,7 @@ function Tracking() {
   const onChange = ({ target }) => settrackNo(target.value);
 
 
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(1);
   const [isLastStep, setIsLastStep] = useState(false);
   const [isFirstStep, setIsFirstStep] = useState(false);
 
@@ -61,43 +61,44 @@ function Tracking() {
       </div>
 
       {/* STEPPER */}
-      <div className="w-full py-4 ">
+      <div className="w-full p-10 bg-gray-100 rounded-md">
         <Stepper
           activeStep={activeStep}
           isLastStep={(value) => setIsLastStep(value)}
           isFirstStep={(value) => setIsFirstStep(value)}
+          
         >
-          <Step onClick={() => setActiveStep(0)}>
-            <HomeIcon className="h-5 w-5" />
+          <Step onClick={() => setActiveStep(0)} >
+            <ClipboardDocumentListIcon className="h-5 w-5" />
           </Step>
           <Step onClick={() => setActiveStep(1)}>
-            <UserIcon className="h-5 w-5" />
+            <CubeIcon className="h-5 w-5" />
+          </Step>
+          <Step onClick={() => setActiveStep(2)}>
+            <TruckIcon className="h-5 w-5" />
           </Step>
           <Step onClick={() => setActiveStep(2)}>
             <CogIcon className="h-5 w-5" />
           </Step>
           <Step onClick={() => setActiveStep(2)}>
-            <CogIcon className="h-5 w-5" />
-          </Step>
-          <Step onClick={() => setActiveStep(2)}>
-            <CogIcon className="h-5 w-5" />
+            <HomeIcon className="h-5 w-5" />
           </Step>
         </Stepper>
 
-        <div className="mt-16 flex justify-between">
+        {/* <div className="mt-16 flex justify-between">
         <Button onClick={handlePrev} disabled={isFirstStep}>
           Prev
         </Button>
         <Button onClick={handleNext} disabled={isLastStep}>
           Next
         </Button>
-      </div>
+      </div> */}
 
       </div>
       {/*   SHIPPING PROCESS DETAILS */}
       <div className="md:flex gap-x-10 my-10">
 
-      <div className="flex-1 ">
+      <div className="flex-2 ">
         <Timeline>
           <TimelineItem className="h-40 my-2">
             <TimelineConnector className="!w-[78px]" />
@@ -152,13 +153,13 @@ function Tracking() {
         </Timeline>
       </div>
 
-      <div className="flex-1 items-start">
-        <div className="relative rounded-xl border border-blue-gray-50 bg-white p-3 mb-5 shadow-lg shadow-blue-gray-900/5 md:w-[70%]">
+      <div className="flex-1 items-start ">
+        <div className="relative rounded-xl border border-blue-gray-50 bg-white p-3 mb-5 shadow-lg shadow-blue-gray-900/5">
         <Typography variant="h6" color="blue-gray">Senders Address</Typography>
         <hr />
-        <Typography variant="h6" color="blue-gray">Name : test test test</Typography>
-        <Typography variant="h6" color="blue-gray">Address : test test test</Typography>
-        <Typography variant="h6" color="blue-gray">Phone : test test test</Typography>
+        <Typography variant="" color="blue-gray">Name : test test test</Typography>
+        <Typography variant="" color="blue-gray">Address : test test test</Typography>
+        <Typography variant="" color="blue-gray">Phone : test test test</Typography>
         
         </div>
         <div>Receiver Address</div>

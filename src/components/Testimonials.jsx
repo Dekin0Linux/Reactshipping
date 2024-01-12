@@ -8,12 +8,12 @@ import { Autoplay} from "swiper";
 
 function Testimonials() {
   return (
-    <div className='container md:mx-auto'>
+    <div className=' md:py-10 bg-indigo-900	 text-white'>
 
-      <div className='flex flex-wrap my-20 gap-y-10 mx-5'>
+      <div className='flex flex-wrap my-20 gap-y-10 container md:mx-auto'>
         <div className=''>
           <p>Testimonials</p>
-          <h1 className='md:text-6xl text-4xl font-bold'>What Our Clients <br /> Say About Us</h1>
+          <h1 className='md:text-6xl text-4xl font-light'>What Our Clients <br /> Say About Us</h1>
         </div>
 
           <Swiper 

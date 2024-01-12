@@ -5,7 +5,7 @@ import { Autoplay} from "swiper";
 
 function Partners() {
   return (
-  <div className='container md:mx-auto '>
+  <div className='container md:mx-auto md:py-10'>
     <Swiper 
             className='my-20 text-center'
             spaceBetween={10}

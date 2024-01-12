@@ -10,7 +10,7 @@ function TestimonalCard({imgSrc,name}) {
             <p className='text-xl '>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates ex dignissimos sunt ducimus maiores? Adipisci magni dolor qui libero mollitia debitis tempore atque, temporibus obcaecati, reprehenderit repudiandae nobis amet quaerat.</p>
 
             <div className='mt-16'>
-                <p className='font-semibold text-gray-700'>{name}</p>
+                <p className='font-semibold text-gray-50'>{name}</p>
             </div>
         </div>
         
