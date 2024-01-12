@@ -20,7 +20,7 @@ function Hero() {
                         <button className='px-6 py-3 bg-blue-900 text-white font-semibold rounded'>Shipment Tracking</button>
                     </Link>
                     
-                    <button className='px-6 py-3 border-blue-900 border-2 text-black font-semibold rounded'>Shipment Rates</button>
+                    <button className='px-6 py-3 border-blue-900 text-black font-semibold rounded _hover:bg-blue-500'>Request Quote</button>
                 </div>
             </div>
             <div className='md:w-[50%]'>
