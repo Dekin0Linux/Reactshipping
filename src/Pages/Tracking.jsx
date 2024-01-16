@@ -6,7 +6,7 @@ import {
   TimelineIcon,
   TimelineHeader,
 } from "@material-tailwind/react";
-import { HomeIcon, CogIcon, UserIcon, ClipboardDocumentListIcon, TruckIcon, CubeIcon } from "@heroicons/react/24/outline";
+import { HomeIcon, ShieldCheckIcon, UserIcon, ClipboardDocumentListIcon, TruckIcon, CubeIcon } from "@heroicons/react/24/outline";
 import {
   BellIcon,
   ArchiveBoxIcon,
@@ -35,7 +35,7 @@ function Tracking() {
         setActiveStep(resp.data.getShipping[0]?.stepNo)
         setEntry(resp.data.getEntry)
         setShipping(resp.data.getShipping)
-        settrackNo('')
+        // settrackNo('')
         setLoading(false)
       }).catch(err => {
         console.log(err)
@@ -76,6 +76,10 @@ function Tracking() {
         </Button>
       </div>
 
+      <div className="my-5">
+        Tracking Number #{trackNo}
+      </div>
+
       {/* STEPPER */}
       {
         shipping.length >= 1 &&
@@ -97,7 +101,7 @@ function Tracking() {
               <TruckIcon className="h-5 w-5" />
             </Step>
             <Step>
-              <CogIcon className="h-5 w-5" />
+              <ShieldCheckIcon className="h-5 w-5" />
             </Step>
             <Step >
               <HomeIcon className="h-5 w-5" />
@@ -116,8 +120,9 @@ function Tracking() {
           <div className="md:w-[50%] ">
             <Timeline>
               {
-                entry.map(e => (
-                  <TimelineItem className="h-28">
+                entry.map((e,index) => (
+                  <TimelineItem key={index} className="h-28">
+                    {index <=1? <TimelineConnector />: '' }
                     <TimelineHeader className={`relative rounded-xl border border-${e.color} bg-white py-3 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5`}>
                       <TimelineIcon className="p-3" variant="ghost" color="green">
                         <TruckIcon className="h-5 w-5" />
