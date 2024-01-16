@@ -6,29 +6,43 @@ import {
   TimelineIcon,
   TimelineHeader,
 } from "@material-tailwind/react";
-import { HomeIcon, CogIcon, UserIcon,ClipboardDocumentListIcon,TruckIcon,CubeIcon } from "@heroicons/react/24/outline";
+import { HomeIcon, CogIcon, UserIcon, ClipboardDocumentListIcon, TruckIcon, CubeIcon } from "@heroicons/react/24/outline";
 import {
   BellIcon,
   ArchiveBoxIcon,
   CurrencyDollarIcon,
-} from "@heroicons/react/24/solid";
+} from "@heroicons/react/24/solid"
 
+import axios from 'axios'
 
 
 function Tracking() {
   const [trackNo, settrackNo] = useState("");
   const onChange = ({ target }) => settrackNo(target.value);
+  const [entry, setEntry] = useState([])
+  const [shipping, setShipping] = useState([])
+  const [loading, setLoading] = useState(true)
 
 
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(0);
   const [isLastStep, setIsLastStep] = useState(false);
   const [isFirstStep, setIsFirstStep] = useState(false);
 
-  const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
-  const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
 
-  const handleTrackSubmit = ()=>{
-    alert(trackNo)
+  const handleTrackSubmit = () => {
+    try {
+      axios.get(`http://localhost:4000/getShipping/${trackNo}`).then(resp => {
+        setActiveStep(resp.data.getShipping[0]?.stepNo)
+        setEntry(resp.data.getEntry)
+        setShipping(resp.data.getShipping)
+        settrackNo('')
+        setLoading(false)
+      }).catch(err => {
+        console.log(err)
+      })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
 
@@ -38,11 +52,13 @@ function Tracking() {
       <div className="text-center p-5 bg-blue-400 text-white mb-5">
         <p className="text-xl">Parcel Tracking</p>
       </div>
-      <div className="relative flex w-full max-w-[24rem] my-5" size="lg">
+      <div className="relative flex md:mx-auto w-full max-w-[24rem] my-5" size="lg">
         <Input
           type="text"
           label="Enter Tracking Number"
           value={trackNo}
+          maxLength={6}
+          minLength={6}
           onChange={onChange}
           className="pr-20 uppercase"
           containerProps={{
@@ -61,110 +77,106 @@ function Tracking() {
       </div>
 
       {/* STEPPER */}
-      <div className="w-full p-10 bg-gray-100 rounded-md">
-        <Stepper
-          activeStep={activeStep}
-          isLastStep={(value) => setIsLastStep(value)}
-          isFirstStep={(value) => setIsFirstStep(value)}
-          
-        >
-          <Step onClick={() => setActiveStep(0)} >
-            <ClipboardDocumentListIcon className="h-5 w-5" />
-          </Step>
-          <Step onClick={() => setActiveStep(1)}>
-            <CubeIcon className="h-5 w-5" />
-          </Step>
-          <Step onClick={() => setActiveStep(2)}>
-            <TruckIcon className="h-5 w-5" />
-          </Step>
-          <Step onClick={() => setActiveStep(2)}>
-            <CogIcon className="h-5 w-5" />
-          </Step>
-          <Step onClick={() => setActiveStep(2)}>
-            <HomeIcon className="h-5 w-5" />
-          </Step>
-        </Stepper>
+      {
+        shipping.length >= 1 &&
 
-        {/* <div className="mt-16 flex justify-between">
-        <Button onClick={handlePrev} disabled={isFirstStep}>
-          Prev
-        </Button>
-        <Button onClick={handleNext} disabled={isLastStep}>
-          Next
-        </Button>
-      </div> */}
+        <div className="w-full p-10 bg-gray-100 rounded-md">
+          <Stepper
+            activeStep={activeStep}
+            isLastStep={(value) => setIsLastStep(value)}
+            isFirstStep={(value) => setIsFirstStep(value)}
+          >
+            <Step>
+              <ClipboardDocumentListIcon className="h-5 w-5" />
+            </Step>
+            <Step >
+              <CubeIcon className="h-5 w-5" />
+            </Step>
 
-      </div>
-      {/*   SHIPPING PROCESS DETAILS */}
-      <div className="md:flex gap-x-10 my-10">
-
-      <div className="flex-2 ">
-        <Timeline>
-          <TimelineItem className="h-40 my-2">
-            <TimelineConnector className="!w-[78px]" />
-            <TimelineHeader className="relative rounded-xl border-2 border-red-300 bg-white py-3 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
-              <TimelineIcon className="p-3" variant="ghost">
-                <BellIcon className="h-5 w-5" />
-              </TimelineIcon>
-              <div className="flex flex-col">
-                <Typography variant="h6" color="blue-gray">
-                  $2400, Design changes
-                </Typography>
-                <Typography variant="small" color="gray" className="font-light">
-                  22 DEC 7:20 PM
-                </Typography>
-                <Typography variant="small" color="black" className="font-normal">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint voluptatum magni nulla labore sapiente atque dolorum totam! Harum, nihil sint!
-                </Typography>
-              </div>
-            </TimelineHeader>
-          </TimelineItem>
-          <TimelineItem className="h-28">
-            <TimelineConnector className="!w-[78px]" />
-            <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-3 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
-              <TimelineIcon className="p-3" variant="ghost" color="red">
-                <ArchiveBoxIcon className="h-5 w-5" />
-              </TimelineIcon>
-              <div className="flex flex-col gap-1">
-                <Typography variant="h6" color="blue-gray">
-                  New order #1832412
-                </Typography>
-                <Typography variant="small" color="gray" className="font-normal">
-                  21 DEC 11 PM
-                </Typography>
-              </div>
-            </TimelineHeader>
-          </TimelineItem>
-          <TimelineItem className="h-28">
-            <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-3 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
-              <TimelineIcon className="p-3" variant="ghost" color="green">
-                <CurrencyDollarIcon className="h-5 w-5" />
-              </TimelineIcon>
-              <div className="flex flex-col gap-1">
-                <Typography variant="h6" color="blue-gray">
-                  Payment completed for order #4395133
-                </Typography>
-                <Typography variant="small" color="gray" className="font-normal">
-                  20 DEC 2:20 AM
-                </Typography>
-              </div>
-            </TimelineHeader>
-          </TimelineItem>
-        </Timeline>
-      </div>
-
-      <div className="flex-1 items-start ">
-        <div className="relative rounded-xl border border-blue-gray-50 bg-white p-3 mb-5 shadow-lg shadow-blue-gray-900/5">
-        <Typography variant="h6" color="blue-gray">Senders Address</Typography>
-        <hr />
-        <Typography variant="" color="blue-gray">Name : test test test</Typography>
-        <Typography variant="" color="blue-gray">Address : test test test</Typography>
-        <Typography variant="" color="blue-gray">Phone : test test test</Typography>
-        
+            <Step>
+              <TruckIcon className="h-5 w-5" />
+            </Step>
+            <Step>
+              <CogIcon className="h-5 w-5" />
+            </Step>
+            <Step >
+              <HomeIcon className="h-5 w-5" />
+            </Step>
+          </Stepper>
         </div>
-        <div>Receiver Address</div>
+      }
+
+      
+
+
+      {/*   SHIPPING PROCESS DETAILS */}
+      <div className="md:flex gap-x-10 flex-wrap my-5">
+        {/* timeline */}
+        {entry.length >= 1 &&
+          <div className="md:w-[50%] ">
+            <Timeline>
+              {
+                entry.map(e => (
+                  <TimelineItem className="h-28">
+                    <TimelineHeader className={`relative rounded-xl border border-${e.color} bg-white py-3 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5`}>
+                      <TimelineIcon className="p-3" variant="ghost" color="green">
+                        <TruckIcon className="h-5 w-5" />
+                      </TimelineIcon>
+                      <div className="flex flex-col gap-1">
+                        <Typography variant="h6" color="blue-gray">
+                          {e.title}
+                        </Typography>
+                        <p className="text-xs text-gray-500">{e.date}</p>
+                        <p className="text-xs text-gray-500">{e.note}</p>
+                      </div>
+                    </TimelineHeader>
+                  </TimelineItem>
+                ))
+              }
+            </Timeline>
+          </div>
+        }
+        {/* end of time line */}
+
+        {
+        shipping.length >= 1 &&
+        <div className="items-start flex">
+          <div className="relative border border-blue-gray-50 bg-white mb-5 shadow-blue-gray-900/5">
+            <div className=" p-2 bg-blue-800 text-white">
+              <p className="text-lg">Senders Address</p>
+            </div>
+
+            <div className="p-2">
+              <p className="text-xs md:text-md capitalize text-gray-400 font-light">Name : {shipping[0]?.senderName}</p>
+              <p className="text-xs md:text-md capitalize text-gray-400 font-light">Address :{shipping[0]?.senderAddress}</p>
+              <p className="text-xs md:text-md capitalize text-gray-400 font-light">Phone : {shipping[0]?.senderPhone}</p>
+            </div>
+          </div>
+
+          <div className="relative border border-blue-gray-50 bg-white mb-5 shadow-blue-gray-900/5">
+            <div className=" p-2 bg-blue-800 text-white">
+              <p className="text-lg">Receiver Address</p>
+            </div>
+
+            <div className="p-2">
+              <p className="text-xs md:text-md capitalize text-gray-400 font-light">Name : {shipping[0]?.receiverName}</p>
+              <p className="text-xs md:text-md capitalize text-gray-400 font-light">Address :{shipping[0]?.receiverAddress}</p>
+              <p className="text-xs md:text-md capitalize text-gray-400 font-light">Phone : {shipping[0]?.receiverPhone}</p>
+            </div>
+          </div>
+
+        </div>
+      }
+
+
+
       </div>
-      </div>
+      {
+        !loading && entry.length <= 0 && shipping.length <= 0 && (<div className="flex flex-col justify-center items-center">
+          <p className="text-red-500 text-2xl font-light">No shipping available</p>
+          <img src="https://cdni.iconscout.com/illustration/premium/thumb/man-check-order-list-10243362-8287405.png?f=webp" alt="" />
+        </div>)
+      }
 
 
     </div>
