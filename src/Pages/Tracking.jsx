@@ -129,7 +129,7 @@ function Tracking() {
                       </TimelineIcon>
                       <div className="flex flex-col gap-1">
                         <Typography variant="h6" color="blue-gray">
-                          {e.title}
+                          {e.title} 
                         </Typography>
                         <p className="text-xs text-gray-500">{e.date}</p>
                         <p className="text-xs text-gray-500">{e.note}</p>
@@ -148,7 +148,7 @@ function Tracking() {
         <div className="items-start flex">
           <div className="relative border border-blue-gray-50 bg-white mb-5 shadow-blue-gray-900/5">
             <div className=" p-2 bg-blue-800 text-white">
-              <p className="text-lg">Senders Address</p>
+              <p className="text-lg">Senders Address </p>
             </div>
 
             <div className="p-2">
